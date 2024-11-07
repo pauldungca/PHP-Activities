@@ -25,7 +25,7 @@
     }
 ?>
 
-<img src="../images/samplePhoto.jpg" style="width: <?php echo ($pictureSize + 50); ?>px; height: <?php echo ($pictureSize + 50); ?>px; margin-left: 50px; border: 5px solid <?php echo $borderColor; ?>;">
+<img src="../images/samplePhoto.png" style="width: <?php echo ($pictureSize + 50); ?>px; height: <?php echo ($pictureSize + 50); ?>px; margin-left: 50px; border: 5px solid <?php echo $borderColor; ?>;">
 
 </body>
 </html>
