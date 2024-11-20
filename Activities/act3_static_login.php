@@ -1,84 +1,79 @@
+<?php 
+    $accounts = [
+        "Admin" => [
+            "admin" => "pass1234", "renmark" => "pogi1234"
+        ],
+        "Content Manager" => [
+            "pepito" => "manaloto", "juan" => "delacruz"
+        ],
+        "User" => [
+            "pedro" => "penduko"
+        ],
+    ];
+
+    $isValid = false;
+    $alertMessage = '';
+    $alertType = '';
+
+    if (isset($_POST['SignInButton'])) {
+        $role = $_POST['role'];  
+        $username = $_POST['Username'];  
+        $password = $_POST['Password'];
+
+        if (isset($accounts[$role]) && isset($accounts[$role][$username])) {
+            if ($accounts[$role][$username] === $password) {
+                $isValid = true;
+                $alertMessage = "Login successful. Welcome, $role $username!";
+                $alertType = 'alert-success';
+            }
+        }
+
+        if (!$isValid) {
+            $alertMessage = "Invalid credentials. Please try again.";
+            $alertType = 'alert-danger';
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Static Login</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
-<body>
-
-    <form method="post" class="top-margin" style="margin-top: 5%;">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-offset-6 col-md-3">
-                    <div class="form-login">
-                        <h4>Welcome back.</h4>
-                        <select name="Role" class="form-control mb-3">
-                            <option value="Admin" selected>Admin</option>
-                            <option value="Content Manager">Content Manager</option>
-                            <option value="System User">System User</option>
-                        </select>
-                        </br>
-                        <input type="text" id="UserName" name="UserName" class="form-control input-sm chat-input" required placeholder="User name" />
-                        </br>
-                        <input type="password" id="Password" name="Password" class="form-control input-sm chat-input" required placeholder="Password" />
-                        </br>
-                        <div class="wrapper">
-                            <button type="submit" name="SignInButton" class="form-control background-blue">Sign In</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <?php if ($alertMessage): ?>
+        <div class="alert <?php echo $alertType; ?> alert-dismissible fade show position-absolute top-0 mt-5 w-30" role="alert">
+            <?php echo $alertMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-   </form>
+    <?php endif; ?>
+    
+    <div class="card p-4" style="width: 300px;">
+        <div class="text-center mb-4">
+        <img alt="User icon" class="rounded-circle" height="100" src="https://storage.googleapis.com/a1aa/image/3yr3AmrOlLJ4KR3E9V4uFZSmOaevMz1RmOpLaqOcqSuaEb5JA.jpg" width="100"/>
+        </div>
+        <form method="post" action="">
+            <div class="mb-3">
+                <select class="form-select" name="role" aria-label="Role selection">
+                    <option value="Admin" selected>Admin</option>
+                    <option value="Content Manager">Content Manager</option>
+                    <option value="User">User</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <input class="form-control" placeholder="User Name" type="text" name="Username" required/>
+            </div>
+            <div class="mb-3">
+                <input class="form-control" placeholder="Password" name="Password" type="password" required/>
+            </div>
+            <button class="btn btn-primary w-100" name="SignInButton" style="background-color: #5a8aa8; border-color: #5a8aa8;" type="submit">Sign in</button>
+        </form>
+    </div>
 
-   <?php 
-        $accounts = 
-            [
-                "Admin" => 
-                    [
-                        "admin1" => "adminpassword1", "admin2" => "adminpassword2"
-                    ],
-
-                "Content Manager" => 
-                    [
-                        "manager1" => "managerpassword1", "manager2" => "managerpassword2"
-                    ],
-                "User" => 
-                    [
-                        "user1" => "userpassword1"
-                    ],
-            ];
-   ?>
-
-    <?php 
-        if (isset($_POST['SignInButton'])) {
-            $role = $_POST['Role'];
-            $username = $_POST['UserName'];
-            $password = $_POST['Password'];
-            $isValid = false;
-
-            
-            if (isset($accounts[$role]) && isset($accounts[$role][$username])) {
-                if ($accounts[$role][$username] === $password) {
-                    $isValid = true;
-                }
-            }
-
-            if ($isValid) {
-                echo "<div class='container top-center-alert'><div class='alert alert-success alert-dismissible'>Login successful. Welcome, $role $username!</div></div>";
-            } 
-            else {
-                echo "<div class='container top-center-alert'><div class='alert alert-danger alert-dismissible'>Invalid credentials. Please try again.</div></div>";
-            }
-        }
-    ?>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
